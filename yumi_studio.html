@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YUMI Studio｜細膩、文藝與療癒的手繪穿戴甲</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;600&family=Zen+Maru+Gothic:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#FAF6F0',   /* 溫暖奶油底色 */
+                            100: '#F4ECE1',  /* 淺大地 */
+                            200: '#E8D8C8',  /* 燕麥粉 */
+                            300: '#D6BCAB',  /* 柔和裸棕 */
+                            400: '#B89785',  /* 乾燥玫瑰棕 */
+                            500: '#9E7762',  /* 質感暖棕 */
+                            600: '#805B48',
+                            700: '#634232',
+                            800: '#482D20',
+                            900: '#2E1910'
+                        },
+                        sage: {
+                            100: '#EAEFE9',
+                            300: '#B2C2B1',
+                            500: '#7B927A'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Noto Serif TC"', 'serif'],
+                        sans: ['"Zen Maru Gothic"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Zen Maru Gothic', sans-serif;
+            background-color: #FAF6F0;
+            color: #482D20;
+        }
+        .font-title {
+            font-family: 'Noto Serif TC', serif;
+        }
+        .bg-grid-pattern {
+            background-image: radial-gradient(#D6BCAB 0.75px, transparent 0.75px);
+            background-size: 24px 24px;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(232, 216, 200, 0.5);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FAF6F0;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D6BCAB;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #B89785;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-brand-200 selection:text-brand-900">
+
+    <!-- Navigation Bar -->
+    <header class="sticky top-0 z-50 glass-card transition-all duration-300 shadow-sm" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <a href="#home" class="flex items-center gap-2 group">
+                    <div class="w-10 h-10 rounded-full bg-brand-300 flex items-center justify-center text-white font-serif font-bold text-xl group-hover:bg-brand-400 transition-colors">
+                        Y
+                    </div>
+                    <div>
+                        <span class="font-title text-xl font-bold tracking-wider text-brand-800 block">YUMI Studio</span>
+                        <span class="text-[10px] tracking-widest text-brand-500 uppercase block -mt-1">Handcrafted Nails</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation Menu -->
+                <nav class="hidden lg:flex items-center space-x-8 text-sm font-medium">
+                    <a href="#about" class="text-brand-800 hover:text-brand-500 transition-colors">關於我</a>
+                    <a href="#portfolio" class="text-brand-800 hover:text-brand-500 transition-colors">作品集</a>
+                    <a href="#custom" class="text-brand-800 hover:text-brand-500 transition-colors">客製化服務</a>
+                    <a href="#ordering" class="text-brand-800 hover:text-brand-500 transition-colors">訂購資訊</a>
+                    <a href="#tutorial" class="text-brand-800 hover:text-brand-500 transition-colors">教學與保養</a>
+                    <a href="#reviews" class="text-brand-800 hover:text-brand-500 transition-colors">顧客分享</a>
+                    <a href="#contact" class="px-5 py-2.5 bg-brand-500 hover:bg-brand-600 text-white rounded-full shadow-md hover:shadow-lg transition-all duration-300">聯絡我</a>
+                </nav>
+
+                <!-- Mobile Menu Button -->
+                <div class="lg:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-brand-800 hover:text-brand-500 p-2 focus:outline-none" aria-label="選單">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Drawer -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-brand-50/95 backdrop-blur-md border-b border-brand-200 px-4 pt-2 pb-6 space-y-3">
+            <a href="#about" class="block px-3 py-2 text-base font-medium text-brand-800 hover:bg-brand-100 rounded-lg">關於我</a>
+            <a href="#portfolio" class="block px-3 py-2 text-base font-medium text-brand-800 hover:bg-brand-100 rounded-lg">穿戴甲作品集</a>
+            <a href="#custom" class="block px-3 py-2 text-base font-medium text-brand-800 hover:bg-brand-100 rounded-lg">客製化設計服務</a>
+            <a href="#ordering" class="block px-3 py-2 text-base font-medium text-brand-800 hover:bg-brand-100 rounded-lg">訂購與流程</a>
+            <a href="#tutorial" class="block px-3 py-2 text-base font-medium text-brand-800 hover:bg-brand-100 rounded-lg">教學與保養</a>
+            <a href="#reviews" class="block px-3 py-2 text-base font-medium text-brand-800 hover:bg-brand-100 rounded-lg">顧客實戴分享</a>
+            <a href="#contact" class="block w-full text-center py-2.5 bg-brand-500 text-white font-medium rounded-full mt-4">聯絡與預約</a>
+        </div>
+    </header>
+
+    <main>
+        <section id="home" class="relative overflow-hidden pt-12 pb-20 md:py-28 bg-grid-pattern">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <!-- Left Hero Text -->
+                    <div class="space-y-6 text-center md:text-left">
+                        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-100 border border-brand-200 text-brand-700 text-xs tracking-wider">
+                            <span class="w-2 h-2 rounded-full bg-brand-400 animate-pulse"></span>
+                            YUMI Studio 手繪穿戴甲
+                        </div>
+                        <h1 class="font-title text-4xl sm:text-5xl lg:text-6xl text-brand-900 leading-tight font-bold">
+                            讓美好，<br>
+                            <span class="text-brand-500 font-normal italic">從指尖開始。</span>
+                        </h1>
+                        <p class="text-brand-700 text-base sm:text-lg leading-relaxed max-w-xl mx-auto md:mx-0">
+                            每一雙手，都有屬於自己的風格。將細膩的手繪工藝、柔和的色彩搭配與生活美學融入每一款設計，為日常生活增添美感與儀式感。
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start pt-4">
+                            <a href="#portfolio" class="px-8 py-3.5 bg-brand-500 hover:bg-brand-600 text-white rounded-full font-medium text-center shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5">
+                                探索作品集
+                            </a>
+                            <a href="#custom" class="px-8 py-3.5 bg-white hover:bg-brand-100 text-brand-800 border border-brand-300 rounded-full font-medium text-center transition-all duration-300">
+                                預約專屬客製
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Right Hero Showcase Cards Grid -->
+                    <div class="relative">
+                        <div class="grid grid-cols-2 gap-4 sm:gap-6">
+                            <div class="space-y-4 sm:space-y-6">
+                                <div class="rounded-2xl overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300">
+                                    <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=800&auto=format&fit=crop" alt="手繪柔和花卉穿戴甲" class="w-full h-48 sm:h-64 object-cover">
+                                    <div class="p-3 bg-white text-xs text-brand-700 text-center font-medium">柔和晨花系列</div>
+                                </div>
+                                <div class="rounded-2xl overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300">
+                                    <img src="https://images.unsplash.com/photo-1632345031435-8727f6897d53?q=80&w=800&auto=format&fit=crop" alt="極簡法式磨砂穿戴甲" class="w-full h-40 sm:h-52 object-cover">
+                                    <div class="p-3 bg-white text-xs text-brand-700 text-center font-medium">日常極簡水凝</div>
+                                </div>
+                            </div>
+                            <div class="space-y-4 sm:space-y-6 pt-8">
+                                <div class="rounded-2xl overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300">
+                                    <img src="https://images.unsplash.com/photo-1519014816548-bf5fe059798b?q=80&w=800&auto=format&fit=crop" alt="復古藝術暈染穿戴甲" class="w-full h-40 sm:h-52 object-cover">
+                                    <div class="p-3 bg-white text-xs text-brand-700 text-center font-medium">文藝復古暈染</div>
+                                </div>
+                                <div class="rounded-2xl overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300">
+                                    <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?q=80&w=800&auto=format&fit=crop" alt="貓眼光影季節特調" class="w-full h-48 sm:h-64 object-cover">
+                                    <div class="p-3 bg-white text-xs text-brand-700 text-center font-medium">季節琥珀特調</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Floating Badge -->
+                        <div class="absolute -bottom-6 -left-6 bg-white/90 backdrop-blur-md p-4 rounded-2xl shadow-xl border border-brand-200 flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-sage-100 flex items-center justify-center text-sage-500">
+                                <i class="fa-solid fa-wand-magic-sparkles text-lg"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-brand-500">100% 全手作獨特繪製</p>
+                                <p class="text-sm font-bold text-brand-800">可重複配戴與貼心客製</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="py-20 bg-white">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center space-y-3 mb-12">
+                    <span class="text-brand-500 font-medium tracking-widest text-xs uppercase">About Me</span>
+                    <h2 class="font-title text-3xl sm:text-4xl font-bold text-brand-900">用創意描繪風格，用創新拓展可能</h2>
+                    <div class="w-12 h-0.5 bg-brand-300 mx-auto"></div>
+                </div>
+
+                <div class="grid md:grid-cols-12 gap-8 items-center glass-card p-8 sm:p-12 rounded-3xl shadow-sm border border-brand-100">
+                    <div class="md:col-span-5 flex justify-center">
+                        <div class="relative">
+                            <div class="w-64 h-80 rounded-2xl overflow-hidden shadow-md">
+                                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800&auto=format&fit=crop" alt="YUMI Studio 創作者" class="w-full h-full object-cover">
+                            </div>
+                            <div class="absolute -bottom-4 -right-4 bg-brand-200 text-brand-800 p-4 rounded-2xl text-xs font-serif leading-relaxed shadow-sm">
+                                「手繪的溫度，<br>是機製無法替代的真心。」
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="md:col-span-7 space-y-4 text-brand-800 text-sm sm:text-base leading-relaxed">
+                        <p class="font-medium text-brand-900 text-lg">
+                            我是 YUMI Studio 的手繪穿戴甲創作者。
+                        </p>
+                        <p>
+                            相信美感不只是外在的裝飾，更是展現個人風格、傳遞情感與創造生活儀式感的方式。我專注於手繪穿戴甲的設計與創作，從色彩搭配、細節描繪到整體視覺呈現，致力於將細膩、文藝與療癒的美學融入每一件作品，讓指尖成為展現自我、表達個性的獨特媒介。
+                        </p>
+                        <p>
+                            對我而言，創作不只是靈感的實踐，更是持續探索與解決問題的過程。我樂於挑戰不同風格與設計可能，並積極關注 AI 與數位科技的發展，思考如何運用新工具提升創作效率、拓展設計靈感，並優化品牌經營與顧客體驗。
+                        </p>
+                        <div class="pt-4 grid grid-cols-3 gap-4 text-center border-t border-brand-200">
+                            <div>
+                                <span class="block font-title font-bold text-2xl text-brand-600">100%</span>
+                                <span class="text-xs text-brand-500">用心手繪繪製</span>
+                            </div>
+                            <div>
+                                <span class="block font-title font-bold text-2xl text-brand-600">50+</span>
+                                <span class="text-xs text-brand-500">獨創款式設計</span>
+                            </div>
+                            <div>
+                                <span class="block font-title font-bold text-2xl text-brand-600">Custom</span>
+                                <span class="text-xs text-brand-500">專屬甲型量身</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="portfolio" class="py-20 bg-brand-50/50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center space-y-3 mb-10">
+                    <span class="text-brand-500 font-medium tracking-widest text-xs uppercase">Portfolio</span>
+                    <h2 class="font-title text-3xl sm:text-4xl font-bold text-brand-900">穿戴甲作品集</h2>
+                    <p class="text-brand-600 text-sm">探索不同風格主題，找到屬於你的指尖故事</p>
+                </div>
+
+                <!-- Filter Tabs -->
+                <div class="flex flex-wrap justify-center gap-2 mb-10" id="portfolio-filters">
+                    <button class="filter-btn active px-5 py-2 rounded-full text-sm font-medium bg-brand-500 text-white shadow-sm" data-category="all">全部作品</button>
+                    <button class="filter-btn px-5 py-2 rounded-full text-sm font-medium bg-white text-brand-700 hover:bg-brand-200 transition-colors" data-category="seasonal">季節限定</button>
+                    <button class="filter-btn px-5 py-2 rounded-full text-sm font-medium bg-white text-brand-700 hover:bg-brand-200 transition-colors" data-category="floral">花卉與自然</button>
+                    <button class="filter-btn px-5 py-2 rounded-full text-sm font-medium bg-white text-brand-700 hover:bg-brand-200 transition-colors" data-category="minimal">日常簡約</button>
+                    <button class="filter-btn px-5 py-2 rounded-full text-sm font-medium bg-white text-brand-700 hover:bg-brand-200 transition-colors" data-category="festival">節日與主題</button>
+                    <button class="filter-btn px-5 py-2 rounded-full text-sm font-medium bg-white text-brand-700 hover:bg-brand-200 transition-colors" data-category="cheer">偶像應援色系</button>
+                </div>
+
+                <!-- Gallery Grid -->
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8" id="gallery-grid">
+                    <!-- Item 1 -->
+                    <div class="gallery-item bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-brand-100" data-category="seasonal">
+                        <div class="relative overflow-hidden group">
+                            <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=800&auto=format&fit=crop" alt="秋冬琥珀金箔" class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500">
+                            <span class="absolute top-3 right-3 bg-brand-500/80 backdrop-blur-md text-white text-xs px-3 py-1 rounded-full">季節限定</span>
+                        </div>
+                        <div class="p-5">
+                            <h3 class="font-bold text-brand-900 text-lg mb-1">秋日琥珀焦糖光澤</h3>
+                            <p class="text-brand-600 text-xs mb-3">溫暖的透光琥珀搭配細緻手工金箔與立體水滴紋理。</p>
+                            <div class="flex justify-between items-center text-sm font-medium text-brand-800">
+                                <span>NT$ 880</span>
+                                <a href="#custom" class="text-brand-500 hover:text-brand-700 text-xs flex items-center gap-1">訂製此款 <i class="fa-solid fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 2 -->
+                    <div class="gallery-item bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-brand-100" data-category="floral">
+                        <div class="relative overflow-hidden group">
+                            <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?q=80&w=800&auto=format&fit=crop" alt="法式微風繪花" class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500">
+                            <span class="absolute top-3 right-3 bg-sage-500/80 backdrop-blur-md text-white text-xs px-3 py-1 rounded-full">花卉自然</span>
+                        </div>
+                        <div class="p-5">
+                            <h3 class="font-bold text-brand-900 text-lg mb-1">莫蘭迪微風小野花</h3>
+                            <p class="text-brand-600 text-xs mb-3">細膩手繪微型雛菊與鼠尾草綠，呈現溫柔靜謐氣質。</p>
+                            <div class="flex justify-between items-center text-sm font-medium text-brand-800">
+                                <span>NT$ 950</span>
+                                <a href="#custom" class="text-brand-500 hover:text-brand-700 text-xs flex items-center gap-1">訂製此款 <i class="fa-solid fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 3 -->
+                    <div class="gallery-item bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-brand-100" data-category="minimal">
+                        <div class="relative overflow-hidden group">
+                            <img src="https://images.unsplash.com/photo-1632345031435-8727f6897d53?q=80&w=800&auto=format&fit=crop" alt="燕麥奶茶極簡線條" class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500">
+                            <span class="absolute top-3 right-3 bg-brand-300 backdrop-blur-md text-brand-900 text-xs px-3 py-1 rounded-full">日常簡約</span>
+                        </div>
+                        <div class="p-5">
+                            <h3 class="font-bold text-brand-900 text-lg mb-1">燕麥純色與立體冰塊</h3>
+                            <p class="text-brand-600 text-xs mb-3">簡潔優雅的低飽和奶茶底色，點綴透明立體流線。</p>
+                            <div class="flex justify-between items-center text-sm font-medium text-brand-800">
+                                <span>NT$ 750</span>
+                                <a href="#custom" class="text-brand-500 hover:text-brand-700 text-xs flex items-center gap-1">訂製此款 <i class="fa-solid fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 4 -->
+                    <div class="gallery-item bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-brand-100" data-category="cheer">
+                        <div class="relative overflow-hidden group">
+                            <img src="https://images.unsplash.com/photo-1519014816548-bf5fe059798b?q=80&w=800&auto=format&fit=crop" alt="紫羅蘭星空貓眼" class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500">
+                            <span class="absolute top-3 right-3 bg-purple-500/80 backdrop-blur-md text-white text-xs px-3 py-1 rounded-full">應援色系</span>
+                        </div>
+                        <div class="p-5">
+                            <h3 class="font-bold text-brand-900 text-lg mb-1">夢幻紫羅蘭晶石貓眼</h3>
+                            <p class="text-brand-600 text-xs mb-3">專為演唱會與應援設計，靈動閃耀的光影貓眼效果。</p>
+                            <div class="flex justify-between items-center text-sm font-medium text-brand-800">
+                                <span>NT$ 820</span>
+                                <a href="#custom" class="text-brand-500 hover:text-brand-700 text-xs flex items-center gap-1">訂製此款 <i class="fa-solid fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 5 -->
+                    <div class="gallery-item bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-brand-100" data-category="festival">
+                        <div class="relative overflow-hidden group">
+                            <img src="https://images.unsplash.com/photo-1508672019048-805479767705?q=80&w=800&auto=format&fit=crop" alt="聖誕雪花璀璨" class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500">
+                            <span class="absolute top-3 right-3 bg-red-400/80 backdrop-blur-md text-white text-xs px-3 py-1 rounded-full">節日主題</span>
+                        </div>
+                        <div class="p-5">
+                            <h3 class="font-bold text-brand-900 text-lg mb-1">冬日聖誕微光雪花</h3>
+                            <p class="text-brand-600 text-xs mb-3">細緻銀箔繪製雪花，加上浮雕小熊立體配飾。</p>
+                            <div class="flex justify-between items-center text-sm font-medium text-brand-800">
+                                <span>NT$ 1,050</span>
+                                <a href="#custom" class="text-brand-500 hover:text-brand-700 text-xs flex items-center gap-1">訂製此款 <i class="fa-solid fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item 6 -->
+                    <div class="gallery-item bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-brand-100" data-category="floral">
+                        <div class="relative overflow-hidden group">
+                            <img src="https://images.unsplash.com/photo-1599839575945-a9e5af0c3fa5?q=80&w=800&auto=format&fit=crop" alt="法式復古油畫" class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500">
+                            <span class="absolute top-3 right-3 bg-sage-500/80 backdrop-blur-md text-white text-xs px-3 py-1 rounded-full">花卉自然</span>
+                        </div>
+                        <div class="p-5">
+                            <h3 class="font-bold text-brand-900 text-lg mb-1">古典莫內花園油畫</h3>
+                            <p class="text-brand-600 text-xs mb-3">層次堆疊的微縮油畫質感，宛如指尖上的藝術展。</p>
+                            <div class="flex justify-between items-center text-sm font-medium text-brand-800">
+                                <span>NT$ 1,180</span>
+                                <a href="#custom" class="text-brand-500 hover:text-brand-700 text-xs flex items-center gap-1">訂製此款 <i class="fa-solid fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="custom" class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center space-y-3 mb-16">
+                    <span class="text-brand-500 font-medium tracking-widest text-xs uppercase">Customization</span>
+                    <h2 class="font-title text-3xl sm:text-4xl font-bold text-brand-900">客製化設計服務</h2>
+                    <p class="text-brand-600 text-sm">打造獨一無二專屬於你的指尖美麗</p>
+                </div>
+
+                <!-- Step Flow Process -->
+                <div class="grid md:grid-cols-4 gap-6 mb-16">
+                    <div class="glass-card p-6 rounded-2xl text-center relative border border-brand-100">
+                        <div class="w-12 h-12 bg-brand-100 text-brand-700 rounded-full flex items-center justify-center font-bold text-lg mx-auto mb-4">01</div>
+                        <h3 class="font-bold text-brand-900 mb-2">測量尺寸與甲型</h3>
+                        <p class="text-xs text-brand-600">依照說明測量十指指甲寬度，並選擇喜愛的甲型（杏仁、方圓、梯形等）。</p>
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl text-center relative border border-brand-100">
+                        <div class="w-12 h-12 bg-brand-100 text-brand-700 rounded-full flex items-center justify-center font-bold text-lg mx-auto mb-4">02</div>
+                        <h3 class="font-bold text-brand-900 mb-2">討論風格與配色</h3>
+                        <p class="text-xs text-brand-600">提供喜愛的圖片、穿搭風格或應援色，與創作者一對一溝通設計細節。</p>
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl text-center relative border border-brand-100">
+                        <div class="w-12 h-12 bg-brand-100 text-brand-700 rounded-full flex items-center justify-center font-bold text-lg mx-auto mb-4">03</div>
+                        <h3 class="font-bold text-brand-900 mb-2">確認報價與製作</h3>
+                        <p class="text-xs text-brand-600">確認圖稿與價格後付款，創作者開始用心細緻手繪製作（約 7-14 個工作天）。</p>
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl text-center relative border border-brand-100">
+                        <div class="w-12 h-12 bg-brand-100 text-brand-700 rounded-full flex items-center justify-center font-bold text-lg mx-auto mb-4">04</div>
+                        <h3 class="font-bold text-brand-900 mb-2">精心包裝出貨</h3>
+                        <p class="text-xs text-brand-600">附贈完整工具包（果凍膠、搓條、酒精棉片），質感包裝送達您手中。</p>
+                    </div>
+                </div>
+
+                <!-- Interactive Size Helper Modal / Tool -->
+                <div class="bg-brand-50 rounded-3xl p-8 sm:p-10 border border-brand-200 grid lg:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <h3 class="font-title text-2xl font-bold text-brand-900 mb-4">尺寸測量指南 (Size Guide)</h3>
+                        <p class="text-brand-700 text-sm mb-4 leading-relaxed">
+                            請使用軟尺沿著指甲弧度最寬處測量（毫米 mm），或使用布膠帶貼在指甲上畫記後平放用直尺測量。
+                        </p>
+                        <div class="space-y-3 text-xs text-brand-800 mb-6">
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-check text-brand-500"></i>
+                                <span><strong>XS 尺寸：</strong> 14mm / 10mm / 11mm / 10mm / 7mm</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-check text-brand-500"></i>
+                                <span><strong>S 尺寸：</strong> 15mm / 11mm / 12mm / 11mm / 8mm</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-check text-brand-500"></i>
+                                <span><strong>M 尺寸：</strong> 16mm / 12mm / 13mm / 12mm / 9mm</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-check text-brand-500"></i>
+                                <span><strong>L 尺寸：</strong> 17mm / 13mm / 14mm / 13mm / 10mm</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Size Calculator Interactive Card -->
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-brand-200">
+                        <h4 class="font-bold text-brand-900 mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-ruler-horizontal text-brand-500"></i> 快速尺寸推估器
+                        </h4>
+                        <div class="space-y-4 text-xs">
+                            <div>
+                                <label class="block text-brand-700 font-medium mb-1">請輸入您大拇指的寬度 (mm)</label>
+                                <input type="number" id="thumb-size" placeholder="例如：15" class="w-full px-4 py-2 rounded-lg border border-brand-200 focus:outline-none focus:border-brand-500">
+                            </div>
+                            <button id="calc-btn" class="w-full py-2.5 bg-brand-500 text-white rounded-lg font-medium hover:bg-brand-600 transition-colors">推估適合尺寸</button>
+                            <div id="calc-result" class="hidden p-3 bg-brand-100 rounded-lg text-brand-800 text-center font-medium"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="ordering" class="py-20 bg-brand-50/50">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center space-y-3 mb-12">
+                    <span class="text-brand-500 font-medium tracking-widest text-xs uppercase">Ordering Info</span>
+                    <h2 class="font-title text-3xl sm:text-4xl font-bold text-brand-900">訂購資訊與須知</h2>
+                    <p class="text-brand-600 text-sm">清晰透明的流程，給您最放心的購物體驗</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8 mb-12">
+                    <div class="bg-white p-6 rounded-2xl border border-brand-100 shadow-sm space-y-3">
+                        <div class="w-10 h-10 rounded-full bg-brand-100 text-brand-600 flex items-center justify-center mb-2">
+                            <i class="fa-solid fa-box-open"></i>
+                        </div>
+                        <h3 class="font-bold text-brand-900">商品內容物</h3>
+                        <p class="text-xs text-brand-700 leading-relaxed">
+                            每份穿戴甲組合均包含：<br>
+                            • 高質感手繪穿戴甲 10 片<br>
+                            • 專用高黏度果凍膠 24 貼（可配戴 1-2 次）<br>
+                            • 美甲專用酒精清潔棉片 2 張<br>
+                            • 雙面海綿搓條 1 支 & 木質櫸木棒 1 支
+                        </p>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl border border-brand-100 shadow-sm space-y-3">
+                        <div class="w-10 h-10 rounded-full bg-brand-100 text-brand-600 flex items-center justify-center mb-2">
+                            <i class="fa-solid fa-truck-fast"></i>
+                        </div>
+                        <h3 class="font-bold text-brand-900">製作與出貨說明</h3>
+                        <p class="text-xs text-brand-700 leading-relaxed">
+                            • 現貨商品：確認付款後 2 個工作天內出貨。<br>
+                            • 客製/預購商品：下單付款後開始手工排單製作，製作期約為 7-14 個工作天。<br>
+                            • 超商取貨付款 / 宅配到府。滿 NT$ 1,500 享免運優惠。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Accordion -->
+                <div class="bg-white rounded-3xl p-6 sm:p-8 border border-brand-200">
+                    <h3 class="font-title text-xl font-bold text-brand-900 mb-6 text-center">常見問題 FAQ</h3>
+                    <div class="space-y-4">
+                        <div class="border-b border-brand-100 pb-3">
+                            <button class="faq-toggle w-full text-left flex justify-between items-center text-brand-900 font-medium py-2">
+                                <span>Q: 穿戴甲可以重複使用嗎？</span>
+                                <i class="fa-solid fa-chevron-down text-xs text-brand-400"></i>
+                            </button>
+                            <div class="faq-content hidden text-xs text-brand-700 pt-2 leading-relaxed">
+                                可以！只要使用果凍膠配戴，卸除後清潔乾淨甲片內側的殘膠，將穿戴甲放回收納盒中，即可多次重複配戴。
+                            </div>
+                        </div>
+
+                        <div class="border-b border-brand-100 pb-3">
+                            <button class="faq-toggle w-full text-left flex justify-between items-center text-brand-900 font-medium py-2">
+                                <span>Q: 使用果凍膠可以維持多久？會容易掉嗎？</span>
+                                <i class="fa-solid fa-chevron-down text-xs text-brand-400"></i>
+                            </button>
+                            <div class="faq-content hidden text-xs text-brand-700 pt-2 leading-relaxed">
+                                正確黏貼（事前酒精徹底清油、貼上後按壓 30 秒並避免 2 小時內碰水），果凍膠一般可維持 5-10 天。若需要長期維持（3-4週），可評估使用美甲專用膠水。
+                            </div>
+                        </div>
+
+                        <div class="border-b border-brand-100 pb-3">
+                            <button class="faq-toggle w-full text-left flex justify-between items-center text-brand-900 font-medium py-2">
+                                <span>Q: 收到後尺寸不合可以退換貨嗎？</span>
+                                <i class="fa-solid fa-chevron-down text-xs text-brand-400"></i>
+                            </button>
+                            <div class="faq-content hidden text-xs text-brand-700 pt-2 leading-relaxed">
+                                穿戴甲屬於個人衛生用品且多為專屬尺寸訂製，下單前請務必仔細對照測量尺寸。若因非瑕疵原因尺寸不合，恕無法退換貨，敬請見諒。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tutorial" class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center space-y-3 mb-16">
+                    <span class="text-brand-500 font-medium tracking-widest text-xs uppercase">Tutorial</span>
+                    <h2 class="font-title text-3xl sm:text-4xl font-bold text-brand-900">穿戴甲教學與保養</h2>
+                    <p class="text-brand-600 text-sm">輕鬆三步驟，第一次配戴就上手</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-12">
+                    <!-- Application Tutorial -->
+                    <div class="space-y-6">
+                        <h3 class="font-title text-2xl font-bold text-brand-900 border-b border-brand-200 pb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-hand text-brand-500"></i> 如何正確配戴？
+                        </h3>
+                        <div class="space-y-4 text-xs text-brand-800">
+                            <div class="flex gap-4 items-start bg-brand-50 p-4 rounded-xl">
+                                <span class="w-6 h-6 rounded-full bg-brand-400 text-white flex items-center justify-center font-bold shrink-0">1</span>
+                                <div>
+                                    <h4 class="font-bold text-brand-900 mb-1">清潔刻磨</h4>
+                                    <p class="text-brand-600">用海綿條輕打磨本甲表面去掉光澤，再用酒精棉片徹底擦拭乾淨油脂與粉塵。</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4 items-start bg-brand-50 p-4 rounded-xl">
+                                <span class="w-6 h-6 rounded-full bg-brand-400 text-white flex items-center justify-center font-bold shrink-0">2</span>
+                                <div>
+                                    <h4 class="font-bold text-brand-900 mb-1">貼妥果凍膠</h4>
+                                    <p class="text-brand-600">選擇比本甲稍微小一點點的果凍膠，貼於本甲根部，並撫平擠出內部空氣。</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4 items-start bg-brand-50 p-4 rounded-xl">
+                                <span class="w-6 h-6 rounded-full bg-brand-400 text-white flex items-center justify-center font-bold shrink-0">3</span>
+                                <div>
+                                    <h4 class="font-bold text-brand-900 mb-1">45度角切入按壓</h4>
+                                    <p class="text-brand-600">撕開保護膜，穿戴甲呈 45 度角切入指甲後緣，向指尖方向推平並用力按壓 30 秒。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Removal & Care Tutorial -->
+                    <div class="space-y-6">
+                        <h3 class="font-title text-2xl font-bold text-brand-900 border-b border-brand-200 pb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-spa text-brand-500"></i> 溫柔卸除與收納
+                        </h3>
+                        <div class="space-y-4 text-xs text-brand-800">
+                            <div class="flex gap-4 items-start bg-brand-50 p-4 rounded-xl">
+                                <span class="w-6 h-6 rounded-full bg-sage-500 text-white flex items-center justify-center font-bold shrink-0">1</span>
+                                <div>
+                                    <h4 class="font-bold text-brand-900 mb-1">溫熱水浸泡</h4>
+                                    <p class="text-brand-600">將雙手浸泡於 40 度左右溫熱水中約 3-5 分鐘，使果凍膠稍微軟化。</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4 items-start bg-brand-50 p-4 rounded-xl">
+                                <span class="w-6 h-6 rounded-full bg-sage-500 text-white flex items-center justify-center font-bold shrink-0">2</span>
+                                <div>
+                                    <h4 class="font-bold text-brand-900 mb-1">櫸木棒輔助卸除</h4>
+                                    <p class="text-brand-600">用木棒從兩側邊緣輕輕撬開小縫隙，慢慢向內推開，切勿直接暴力的撕拔。</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4 items-start bg-brand-50 p-4 rounded-xl">
+                                <span class="w-6 h-6 rounded-full bg-sage-500 text-white flex items-center justify-center font-bold shrink-0">3</span>
+                                <div>
+                                    <h4 class="font-bold text-brand-900 mb-1">清潔殘膠收納</h4>
+                                    <p class="text-brand-600">用木棒將甲片內側殘膠捲出，收納回 YUMI Studio 專屬收納盒中備用。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="reviews" class="py-20 bg-brand-50/50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center space-y-3 mb-16">
+                    <span class="text-brand-500 font-medium tracking-widest text-xs uppercase">Customer Stories</span>
+                    <h2 class="font-title text-3xl sm:text-4xl font-bold text-brand-900">顧客實戴分享</h2>
+                    <p class="text-brand-600 text-sm">謝謝每一位在日常生活中帶上 YUMI 作品的你們</p>
+                </div>
+
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Review 1 -->
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-brand-100 flex flex-col justify-between space-y-4">
+                        <div class="space-y-3">
+                            <div class="flex text-amber-400 text-xs">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            </div>
+                            <p class="text-brand-800 text-xs leading-relaxed">
+                                「手繪細節真的精緻到不行！出國旅遊戴上這套花卉款，朋友都以為我花了幾千塊在美甲店做手繪，超級方便好攜帶～」
+                            </p>
+                        </div>
+                        <div class="flex items-center gap-3 pt-3 border-t border-brand-100">
+                            <div class="w-8 h-8 rounded-full bg-brand-200 flex items-center justify-center text-brand-700 text-xs font-bold">C</div>
+                            <div>
+                                <p class="text-xs font-bold text-brand-900">Claire H.</p>
+                                <p class="text-[10px] text-brand-500">購買：莫蘭迪微風小野花</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Review 2 -->
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-brand-100 flex flex-col justify-between space-y-4">
+                        <div class="space-y-3">
+                            <div class="flex text-amber-400 text-xs">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            </div>
+                            <p class="text-brand-800 text-xs leading-relaxed">
+                                「因為工作關係不能留長甲做美甲，YUMI 的穿戴甲救了我的假日！週末約會貼上，週日晚上卸下，完全不傷原本的指甲，大推！」
+                            </p>
+                        </div>
+                        <div class="flex items-center gap-3 pt-3 border-t border-brand-100">
+                            <div class="w-8 h-8 rounded-full bg-brand-200 flex items-center justify-center text-brand-700 text-xs font-bold">M</div>
+                            <div>
+                                <p class="text-xs font-bold text-brand-900">Mina L.</p>
+                                <p class="text-[10px] text-brand-500">購買：燕麥純色與立體冰塊</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Review 3 -->
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-brand-100 flex flex-col justify-between space-y-4">
+                        <div class="space-y-3">
+                            <div class="flex text-amber-400 text-xs">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            </div>
+                            <p class="text-brand-800 text-xs leading-relaxed">
+                                「客製了演唱會應援色，創作者非常親切又細心地討論配色，出來的效果超級耀眼！真的感受得到滿滿的手作溫度。」
+                            </p>
+                        </div>
+                        <div class="flex items-center gap-3 pt-3 border-t border-brand-100">
+                            <div class="w-8 h-8 rounded-full bg-brand-200 flex items-center justify-center text-brand-700 text-xs font-bold">Y</div>
+                            <div>
+                                <p class="text-xs font-bold text-brand-900">Yiting</p>
+                                <p class="text-[10px] text-brand-500">購買：客製應援色系</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="py-20 bg-white">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center space-y-3 mb-16">
+                    <span class="text-brand-500 font-medium tracking-widest text-xs uppercase">Contact Us</span>
+                    <h2 class="font-title text-3xl sm:text-4xl font-bold text-brand-900">聯絡我與預約諮詢</h2>
+                    <p class="text-brand-600 text-sm">有任何設計想法或尺寸問題嗎？歡迎隨時與我聯繫</p>
+                </div>
+
+                <div class="grid md:grid-cols-12 gap-8">
+                    <!-- Contact Info Cards -->
+                    <div class="md:col-span-5 space-y-6">
+                        <div class="bg-brand-50 p-6 rounded-2xl border border-brand-100 flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-white flex items-center justify-center text-pink-500 text-2xl shadow-sm">
+                                <i class="fa-brands fa-instagram"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-brand-900 text-sm">Instagram 社群</h4>
+                                <p class="text-xs text-brand-600 mb-1">看更多每日作品動態與花絮</p>
+                                <a href="#" class="text-xs font-medium text-brand-800 underline hover:text-brand-500">@yumi_studio_nails</a>
+                            </div>
+                        </div>
+
+                        <div class="bg-brand-50 p-6 rounded-2xl border border-brand-100 flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-white flex items-center justify-center text-emerald-500 text-2xl shadow-sm">
+                                <i class="fa-brands fa-line"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-brand-900 text-sm">LINE 官方帳號</h4>
+                                <p class="text-xs text-brand-600 mb-1">一對一客製討論與快速訂購</p>
+                                <a href="#" class="text-xs font-medium text-brand-800 underline hover:text-brand-500">@yumistudio (含@)</a>
+                            </div>
+                        </div>
+
+                        <div class="bg-brand-50 p-6 rounded-2xl border border-brand-100 flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-white flex items-center justify-center text-brand-600 text-xl shadow-sm">
+                                <i class="fa-regular fa-envelope"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-brand-900 text-sm">商業洽詢 Email</h4>
+                                <p class="text-xs text-brand-600 mb-1">跨界合作、拍攝借棒、批發討論</p>
+                                <span class="text-xs font-medium text-brand-800">contact@yumistudio.design</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact Form -->
+                    <div class="md:col-span-7 bg-brand-50/30 p-8 rounded-3xl border border-brand-200">
+                        <form id="contact-form" class="space-y-4">
+                            <div>
+                                <label class="block text-xs font-medium text-brand-800 mb-1">您的姓名 / 稱呼</label>
+                                <input type="text" required placeholder="例如：林小姐" class="w-full px-4 py-2.5 rounded-xl border border-brand-200 bg-white text-xs focus:outline-none focus:border-brand-500">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-brand-800 mb-1">聯絡 Email 或 LINE ID</label>
+                                <input type="text" required placeholder="方便回覆您的聯絡方式" class="w-full px-4 py-2.5 rounded-xl border border-brand-200 bg-white text-xs focus:outline-none focus:border-brand-500">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-brand-800 mb-1">諮詢類型</label>
+                                <select class="w-full px-4 py-2.5 rounded-xl border border-brand-200 bg-white text-xs focus:outline-none focus:border-brand-500 text-brand-800">
+                                    <option>訂製專屬款式諮詢</option>
+                                    <option>現貨款式尺寸確認</option>
+                                    <option>訂單進度查詢</option>
+                                    <option>品牌跨界合作洽詢</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-brand-800 mb-1">需求內容或想法描述</label>
+                                <textarea rows="4" required placeholder="請簡單告訴我您的想法、預計配戴日期或喜好的風格..." class="w-full px-4 py-2.5 rounded-xl border border-brand-200 bg-white text-xs focus:outline-none focus:border-brand-500"></textarea>
+                            </div>
+                            <button type="submit" class="w-full py-3 bg-brand-500 hover:bg-brand-600 text-white font-medium rounded-xl text-sm transition-colors shadow-sm">
+                                發送訊息
+                            </button>
+                        </form>
+                        <div id="form-message" class="hidden mt-4 p-3 bg-emerald-100 text-emerald-800 text-xs rounded-xl text-center font-medium">
+                            感謝您的來信！YUMI 會在 24 小時內儘快回覆您。
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-brand-900 text-brand-100 py-12 border-t border-brand-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="text-center md:text-left">
+                    <span class="font-title text-2xl font-bold tracking-wider block mb-1">YUMI Studio</span>
+                    <p class="text-xs text-brand-300">手繪穿戴甲｜用創意描繪風格，讓美好從指尖開始。</p>
+                </div>
+                
+                <div class="flex items-center space-x-6 text-lg">
+                    <a href="#" class="hover:text-brand-300 transition-colors" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="hover:text-brand-300 transition-colors" aria-label="LINE"><i class="fa-brands fa-line"></i></a>
+                    <a href="#" class="hover:text-brand-300 transition-colors" aria-label="Pinterest"><i class="fa-brands fa-pinterest"></i></a>
+                </div>
+            </div>
+            
+            <div class="mt-8 pt-6 border-t border-brand-800 text-center text-[11px] text-brand-400">
+                &copy; 2026 YUMI Studio. All Rights Reserved. Designed with Care & Creativity.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Interactive Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu on link click
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Portfolio Filter Functionality
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const galleryItems = document.querySelectorAll('.gallery-item');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => {
+                    b.classList.remove('bg-brand-500', 'text-white', 'shadow-sm');
+                    b.classList.add('bg-white', 'text-brand-700');
+                });
+                btn.classList.remove('bg-white', 'text-brand-700');
+                btn.classList.add('bg-brand-500', 'text-white', 'shadow-sm');
+
+                const category = btn.getAttribute('data-category');
+
+                galleryItems.forEach(item => {
+                    if (category === 'all' || item.getAttribute('data-category') === category) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // FAQ Accordion Functionality
+        const faqToggles = document.querySelectorAll('.faq-toggle');
+
+        faqToggles.forEach(toggle => {
+            toggle.addEventListener('click', () => {
+                const content = toggle.nextElementSibling;
+                const icon = toggle.querySelector('i');
+                content.classList.toggle('hidden');
+                icon.classList.toggle('rotate-180');
+            });
+        });
+
+        // Size Estimator Calculation Logic
+        const calcBtn = document.getElementById('calc-btn');
+        const thumbInput = document.getElementById('thumb-size');
+        const calcResult = document.getElementById('calc-result');
+
+        calcBtn.addEventListener('click', () => {
+            const val = parseFloat(thumbInput.value);
+            if (!val || val <= 0) {
+                calcResult.classList.remove('hidden');
+                calcResult.textContent = '請輸入正確的大拇指毫米數（例如：15）';
+                return;
+            }
+
+            let resultSize = '';
+            if (val <= 14) resultSize = 'XS 號';
+            else if (val <= 15) resultSize = 'S 號';
+            else if (val <= 16) resultSize = 'M 號';
+            else resultSize = 'L 號 或 需要個人客製量測';
+
+            calcResult.classList.remove('hidden');
+            calcResult.innerHTML = `您的預估尺寸為：<strong class="text-brand-600">${resultSize}</strong><br><span class="text-[10px] text-brand-500 font-normal">（如不確定，歡迎私訊 LINE/IG 傳照片給 YUMI 為您核對）</span>`;
+        });
+
+        // Contact Form Submission Mock Logic
+        const contactForm = document.getElementById('contact-form');
+        const formMessage = document.getElementById('form-message');
+
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            formMessage.classList.remove('hidden');
+            contactForm.reset();
+            setTimeout(() => {
+                formMessage.classList.add('hidden');
+            }, 5000);
+        });
+    </script>
+</body>
+</html>
