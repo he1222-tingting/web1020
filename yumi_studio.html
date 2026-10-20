@@ -12,6 +12,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;600&family=Zen+Maru+Gothic:wght@300;400;500;700&display=swap" rel="stylesheet">
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Supabase JavaScript client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
     <script>
         tailwind.config = {
@@ -693,15 +695,15 @@
                         <form id="contact-form" class="space-y-4">
                             <div>
                                 <label class="block text-xs font-medium text-brand-800 mb-1">您的姓名 / 稱呼</label>
-                                <input type="text" required placeholder="例如：林小姐" class="w-full px-4 py-2.5 rounded-xl border border-brand-200 bg-white text-xs focus:outline-none focus:border-brand-500">
+                                <input type="text" name="customer_name" required maxlength="120" autocomplete="name" placeholder="例如：林小姐" class="w-full px-4 py-2.5 rounded-xl border border-brand-200 bg-white text-xs focus:outline-none focus:border-brand-500">
                             </div>
                             <div>
                                 <label class="block text-xs font-medium text-brand-800 mb-1">聯絡 Email 或 LINE ID</label>
-                                <input type="text" required placeholder="方便回覆您的聯絡方式" class="w-full px-4 py-2.5 rounded-xl border border-brand-200 bg-white text-xs focus:outline-none focus:border-brand-500">
+                                <input type="text" name="contact_method" required maxlength="200" autocomplete="email" placeholder="方便回覆您的聯絡方式" class="w-full px-4 py-2.5 rounded-xl border border-brand-200 bg-white text-xs focus:outline-none focus:border-brand-500">
                             </div>
                             <div>
                                 <label class="block text-xs font-medium text-brand-800 mb-1">諮詢類型</label>
-                                <select class="w-full px-4 py-2.5 rounded-xl border border-brand-200 bg-white text-xs focus:outline-none focus:border-brand-500 text-brand-800">
+                                <select name="inquiry_type" required class="w-full px-4 py-2.5 rounded-xl border border-brand-200 bg-white text-xs focus:outline-none focus:border-brand-500 text-brand-800">
                                     <option>訂製專屬款式諮詢</option>
                                     <option>現貨款式尺寸確認</option>
                                     <option>訂單進度查詢</option>
@@ -710,15 +712,13 @@
                             </div>
                             <div>
                                 <label class="block text-xs font-medium text-brand-800 mb-1">需求內容或想法描述</label>
-                                <textarea rows="4" required placeholder="請簡單告訴我您的想法、預計配戴日期或喜好的風格..." class="w-full px-4 py-2.5 rounded-xl border border-brand-200 bg-white text-xs focus:outline-none focus:border-brand-500"></textarea>
+                                <textarea name="message" rows="4" required maxlength="5000" placeholder="請簡單告訴我您的想法、預計配戴日期或喜好的風格..." class="w-full px-4 py-2.5 rounded-xl border border-brand-200 bg-white text-xs focus:outline-none focus:border-brand-500"></textarea>
                             </div>
                             <button type="submit" class="w-full py-3 bg-brand-500 hover:bg-brand-600 text-white font-medium rounded-xl text-sm transition-colors shadow-sm">
                                 發送訊息
                             </button>
                         </form>
-                        <div id="form-message" class="hidden mt-4 p-3 bg-emerald-100 text-emerald-800 text-xs rounded-xl text-center font-medium">
-                            感謝您的來信！YUMI 會在 24 小時內儘快回覆您。
-                        </div>
+                        <div id="form-message" role="status" aria-live="polite" class="hidden mt-4 p-3 text-xs rounded-xl text-center font-medium"></div>
                     </div>
                 </div>
             </div>
@@ -823,17 +823,45 @@
             calcResult.innerHTML = `您的預估尺寸為：<strong class="text-brand-600">${resultSize}</strong><br><span class="text-[10px] text-brand-500 font-normal">（如不確定，歡迎私訊 LINE/IG 傳照片給 YUMI 為您核對）</span>`;
         });
 
-        // Contact Form Submission Mock Logic
+        // Save contact inquiries to the YUMI Studio Supabase table.
         const contactForm = document.getElementById('contact-form');
         const formMessage = document.getElementById('form-message');
+        const submitButton = contactForm.querySelector('button[type="submit"]');
+        const supabaseClient = window.supabase.createClient(
+            'https://iagbaqempemfacvhktvb.supabase.co',
+            'sb_publishable_b2H-NIiUcScmc-FZ_oiKgQ_G7gj5oEg'
+        );
 
-        contactForm.addEventListener('submit', (e) => {
+        contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            formMessage.classList.remove('hidden');
-            contactForm.reset();
-            setTimeout(() => {
-                formMessage.classList.add('hidden');
-            }, 5000);
+            formMessage.className = 'mt-4 p-3 bg-brand-100 text-brand-700 text-xs rounded-xl text-center font-medium';
+            formMessage.textContent = '正在送出，請稍候…';
+            submitButton.disabled = true;
+            submitButton.textContent = '送出中…';
+
+            const formData = new FormData(contactForm);
+            const inquiry = {
+                customer_name: String(formData.get('customer_name') || '').trim(),
+                contact_method: String(formData.get('contact_method') || '').trim(),
+                inquiry_type: String(formData.get('inquiry_type') || '').trim(),
+                message: String(formData.get('message') || '').trim()
+            };
+
+            try {
+                const { error } = await supabaseClient.from('yumi_studio').insert(inquiry);
+                if (error) throw error;
+                formMessage.className = 'mt-4 p-3 bg-emerald-100 text-emerald-800 text-xs rounded-xl text-center font-medium';
+                formMessage.textContent = '感謝您的來信！訊息已成功送出，YUMI 會在 24 小時內儘快回覆您。';
+                contactForm.reset();
+            } catch (error) {
+                console.error('Failed to submit inquiry:', error);
+                formMessage.className = 'mt-4 p-3 bg-rose-100 text-rose-800 text-xs rounded-xl text-center font-medium';
+                formMessage.textContent = '訊息目前無法送出，請稍後再試，或透過 LINE / Instagram 聯絡 YUMI。';
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = '發送訊息';
+                setTimeout(() => formMessage.classList.add('hidden'), 7000);
+            }
         });
     </script>
 </body>
